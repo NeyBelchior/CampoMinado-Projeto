@@ -6,7 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class Tabulheiro {
+import br.com.cod3r.cm.exececao.ExplosaoException;
+
+public class Tabuleiro {
 	
 	private int linhas;
 	private int colunas;
@@ -14,7 +16,7 @@ public class Tabulheiro {
 	
 	private final List<Campo> campos = new ArrayList<>();
 
-	public Tabulheiro(int linhas, int colunas, int minas) {
+	public Tabuleiro(int linhas, int colunas, int minas) {
 		this.linhas = linhas;
 		this.colunas = colunas;
 		this.minas = minas;
@@ -28,10 +30,16 @@ public class Tabulheiro {
 	
 	
 	public void abrir(int linha,int coluna) {
-		campos.parallelStream()
-		.filter(c ->c.getLinha() == linha && c.getColuna()==coluna)
-		.findFirst()
-		.ifPresent(c->c.abrir());
+		
+		try {
+			campos.parallelStream()
+			.filter(c ->c.getLinha() == linha && c.getColuna()==coluna)
+			.findFirst()
+			.ifPresent(c->c.abrir());
+		} catch (ExplosaoException e) {
+		 campos.forEach(c ->c.setAberto(true));	
+		throw e;
+		}
 		
 	}
 	

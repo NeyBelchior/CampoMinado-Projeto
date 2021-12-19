@@ -82,12 +82,30 @@ boolean vizinhancaSegura() {
 
 
 
+public boolean isMarcado() {
+	
+	return marcado;
+	
+	
+}
+
+void minar() {
+	minado =true;
+
+	
+	
+	
+}
+
+public boolean isAberto() {
+	return aberto;
+}
 
 
 
-
-
-
+public boolean isFechado() {
+	return !isAberto();
+}
 
 
 
